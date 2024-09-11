@@ -1,7 +1,7 @@
 # Detecting Aruco markers with Alphabot 2
 
 ## Description
-This repository provides a basic example of detecting Aruco markers with the Alphabot 2. Although developed for the Alphabot 2, the code can also be run on any personal computer. To ensure compatibility, a Python environment is set up to match the Python version and dependencies used by the Alphabot 2. The following sections explain how to install the code and configure the Python environment. Additionally, a basic example demonstrates how to detect Aruco markers using the device's camera.
+This repository provides a basic example of detecting Aruco markers with the Alphabot 2. Although developed for the Alphabot 2, the code can also be run on any personal computer. In this case, a Python environment should be configured to match the Python version and dependencies used by the Alphabot 2. The following sections explain how to install the code and configure the Python environment. Additionally, a basic example demonstrates how to detect Aruco markers using the device's camera.
 
 ## Requirements
 
