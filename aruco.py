@@ -23,16 +23,16 @@ ARUCO_DICT = {
 def acuro_display(corners, ids, rejected, frame):
     """
     Draws a bounding box around the detected ArUco markers, calculates and 
-    draws the center of the markers,and displays the marker IDs on the frame.
+    draws the center of the markers, and displays the marker IDs on the frame.
 
-    Parameters:
-    - corners (list): List of detected ArUco marker corners.
-    - ids (ndarray): Array of detected ArUco marker IDs.
-    - rejected (list): Returned list of ArUco marker candidates.
-    - frame (ndarray): Input frame to display the markers on.
+    Args:
+        corners (list): List of detected ArUco marker corners.
+        ids (ndarray): Array of detected ArUco marker IDs.
+        rejected (list): Returned list of ArUco marker candidates.
+        frame (ndarray): Input frame to display the markers on.
 
     Returns:
-    - frame (ndarray): Frame with ArUco markers displayed.
+        frame (ndarray): Frame with ArUco markers displayed.
     """
 
     # Check that at least one ArUco marker was detected
@@ -74,6 +74,18 @@ def acuro_display(corners, ids, rejected, frame):
     return frame
 
 def detect_markers(frame, aruco_dictionary, aruco_parameters):
+    """
+    Detects ArUco markers of a specific type in a video frame 
+    and displays the markers on the frame.
+
+    Args:
+        frame (ndarray): Input frame to detect ArUco markers.
+        aruco_dictionary (cv2.aruco.Dictionary): ArUco marker dictionary.
+        aruco_parameters (cv2.aruco.DetectorParameters): ArUco detector parameters.
+
+    Returns:
+        detected_markers (ndarray): Frame with ArUco markers displayed.
+    """
 
     # Detect ArUco markers in the video frame
     (corners, ids, rejected) = cv2.aruco.detectMarkers(
