@@ -1,12 +1,4 @@
-import sys
 import cv2
-import argparse
-import numpy as np
-
-# Allow parsing arguments via the command line
-parser = argparse.ArgumentParser()
-parser.add_argument("-t", "--type", type=str, metavar='', default="DICT_6X6_250",
-                    help="ArUco dictionary to use (default: DICT_6X6_250)")
 
 ARUCO_DICT = {
   "DICT_4X4_50": cv2.aruco.DICT_4X4_50,
@@ -81,42 +73,14 @@ def acuro_display(corners, ids, rejected, frame):
 
     return frame
 
-def main():
-    args = vars(parser.parse_args())
-    aruco_type = args["type"]
+def detect_markers(frame, aruco_dictionary, aruco_parameters):
 
-    # Check that we have a valid ArUco marker
-    if ARUCO_DICT.get(aruco_type) is None:
-        print("[INFO] ArUCo tag of '{}' is not supported".format(args["type"]))
-        sys.exit(0)
+    # Detect ArUco markers in the video frame
+    (corners, ids, rejected) = cv2.aruco.detectMarkers(
+        frame, aruco_dictionary, parameters=aruco_parameters)
 
-    # Load the ArUco dictionary
-    print("[INFO] detecting '{}' markers...".format(aruco_type))
-    aruco_dictionary = cv2.aruco.Dictionary_get(ARUCO_DICT[aruco_type])
-    aruco_parameters = cv2.aruco.DetectorParameters_create()
+    # Display the resulting frame
+    # For raspberry pi camera, this drastically reduces performance
+    detected_markers = acuro_display(corners, ids, rejected, frame)
 
-    # Start the video stream
-    cap = cv2.VideoCapture(0)
-
-    while True:
-        ret, frame = cap.read()  
-
-        # Detect ArUco markers in the video frame
-        (corners, ids, rejected) = cv2.aruco.detectMarkers(
-            frame, aruco_dictionary, parameters=aruco_parameters)
-
-        # Display the resulting frame
-        # For raspberry pi camera, this drastically reduces performance
-        detected_markers = acuro_display(corners, ids, rejected, frame)
-        cv2.imshow('frame', detected_markers)
-
-        # If "q" is pressed on the keyboard, exit this loop
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-           break
-
-    # Close down the video stream
-    cap.release()
-    cv2.destroyAllWindows()
-   
-if __name__ == '__main__':
-  main()
+    return detected_markers
